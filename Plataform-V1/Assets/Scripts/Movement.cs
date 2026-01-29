@@ -40,7 +40,7 @@ public class Movement : MonoBehaviour
     {
         input = Input.GetAxisRaw("Horizontal");
 
-        if(Input.GetKeyDown(KeyCode.Space) && IsGrounded() == true)
+        if(Input.GetKeyDown(KeyCode.UpArrow) && IsGrounded() == true)
         {
             Jump();        
         }
@@ -76,7 +76,9 @@ public class Movement : MonoBehaviour
     void Jump()
     {
         rb.AddForce(Vector2.up*jumpForce, ForceMode2D.Impulse);
-        print("Saltei!");            
+        print("Saltei!");
+        playerStates = States.Jumping;
+        //playerStates = States.;           
     }
 
     bool IsGrounded()
@@ -125,17 +127,8 @@ public class Movement : MonoBehaviour
 
     void StateMachine()
     {
-        switch(playerStates)
-        {
-            case States.Idle:
-            print("Estou parado");
-            playerAnimator.SetTrigger("Idle");
-            break;
-            case States.Walking:
-            print("Estou a andar");
-            playerAnimator.SetTrigger("Walking");
-            break;
-        }
+
+        playerAnimator.SetInteger("State",(int)playerStates);
     }
 
     void OnTriggerEnter2D(Collider2D collision)
@@ -148,6 +141,7 @@ public class Movement : MonoBehaviour
         ICollectable collectable = collision.GetComponent<ICollectable>();
         collectable.Collect();
 
+       
     }
 
 
@@ -155,6 +149,7 @@ public class Movement : MonoBehaviour
     {
         Idle,
         Walking,
+        Jumping,
     }
 
 

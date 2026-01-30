@@ -16,9 +16,17 @@ public class Enemy : MonoBehaviour
 
     [SerializeField] private SpriteRenderer spriteRenderer;
 
+    [SerializeField] private BoxCollider2D boxCollider;
+
+    public int checkpointIndex;
+
+    private Rigidbody2D rb;
+
     private int pontosIndex;
 
     private Vector3 startPosition;
+
+    private bool isDead;
 
     private void Awake()
     {
@@ -28,19 +36,19 @@ public class Enemy : MonoBehaviour
 
     private void Update()
     {
+        if (isDead) return;
+
         Vector3 targetPos = pontos[pontosIndex].position;
         Vector3 dir = targetPos - transform.position;
 
-        // Movimento
         transform.position += dir.normalized * speed * Time.deltaTime;
 
-        // Flip do sprite
+  
         if (dir.x != 0)
         {
             spriteRenderer.flipX = dir.x < 0;
         }
 
-        // Chegou no ponto
         if (Vector3.Distance(transform.position, targetPos) <= 0.1f)
         {
             pontosIndex++;
@@ -54,26 +62,39 @@ public class Enemy : MonoBehaviour
 
     public void Die()
     {
-        gameObject.SetActive(false);
+        if (isDead) return;
+        isDead = true;
+
+        spriteRenderer.enabled = false;
+        boxCollider.enabled = false;
+
+        if (rb != null)
+            rb.simulated = false;
     }
 
     public void ResetEnemy()
     {
+        isDead = false;
         pontosIndex = 0;
         transform.position = startPosition;
-        gameObject.SetActive(true);
+
+        spriteRenderer.enabled = true;
+        boxCollider.enabled = true;
+
+        if (rb != null)
+            rb.simulated = true;
     }
 
-    // 👉 DANO LATERAL
+  
     private void OnCollisionEnter2D(Collision2D collision)
     {
         Movement player = collision.gameObject.GetComponent<Movement>();
         if (player == null) return;
 
-        // Normal aponta para onde a força veio
+       
         Vector2 normal = collision.contacts[0].normal;
 
-        // Se NÃO veio de cima, causa dano
+      
         if (normal.y > -0.5f)
         {
             player.TakeDamage(1);

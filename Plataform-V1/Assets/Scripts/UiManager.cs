@@ -20,14 +20,20 @@ public class UiManager : MonoBehaviour
 
     public void ChangeLifeUI(int vidas)
     {
-        for(int i = 0;i<vidasUi.Length;i++)
+        for (int i = 0; i < vidasUi.Length; i++)
         {
-            if(i<vidas)
+            if (i < vidas)
                 vidasUi[i].SetActive(true);
             else
                 vidasUi[i].SetActive(false);
 
         }
     }
+
+        public void UpdateCoinUI(int totalCoins)
+    { 
+        moedaText.text = ":" + totalCoins; 
+    }
+
 
 }

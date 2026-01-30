@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 
 public class Movement : MonoBehaviour
@@ -17,6 +18,8 @@ public class Movement : MonoBehaviour
     [SerializeField] private float distance = 1;
 
     [SerializeField] private LayerMask whatIsGround;
+
+    [SerializeField] private GameManager GameManager;
 
     public int health = 1;
 
@@ -108,6 +111,13 @@ public class Movement : MonoBehaviour
         {
             gameObject.SetActive(false);
             Die();
+
+            GameManager.ResetLevel();
+
+            GameManager.ResetCoins();
+
+            GameManager.ResetCoinValue();
+           
         }
     }
 
@@ -117,6 +127,8 @@ public class Movement : MonoBehaviour
         transform.position = lastCheckpoint.transform.position;
         gameObject.SetActive(true);
         UiManager.Instance.ChangeLifeUI(health);
+
+      
 
 
         //GameManager.Instance.GameOver();
@@ -157,6 +169,8 @@ public class Movement : MonoBehaviour
         Walking,
         Jumping,
     }
+
+   
 
 
 

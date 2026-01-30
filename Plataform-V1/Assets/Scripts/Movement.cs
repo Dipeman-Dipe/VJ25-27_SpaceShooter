@@ -7,15 +7,18 @@ public class Movement : MonoBehaviour
    
 {   
     private Rigidbody2D rb;
+
     [SerializeField] private float speed;
+
     [SerializeField] private float maxSpeed;
+
     [SerializeField] private float jumpForce = 10;
 
     [SerializeField] private float distance = 1;
 
     [SerializeField] private LayerMask whatIsGround;
 
-    int health = 1;
+    public int health = 1;
 
     [SerializeField] GameObject lastCheckpoint;
     private float input;
@@ -23,6 +26,7 @@ public class Movement : MonoBehaviour
     private States playerStates;
 
     [SerializeField] private Animator playerAnimator;
+
     [SerializeField] private SpriteRenderer spriteRenderer;
 #endregion
 #region MonoBehaviour
@@ -114,6 +118,7 @@ public class Movement : MonoBehaviour
         gameObject.SetActive(true);
         UiManager.Instance.ChangeLifeUI(health);
 
+
         //GameManager.Instance.GameOver();
     }
 
@@ -122,7 +127,8 @@ public class Movement : MonoBehaviour
     {   
         health = 3;
         transform.position = lastCheckpoint.transform.position;
-        gameObject.SetActive(true); 
+        gameObject.SetActive(true);
+        
     }
 
     void StateMachine()

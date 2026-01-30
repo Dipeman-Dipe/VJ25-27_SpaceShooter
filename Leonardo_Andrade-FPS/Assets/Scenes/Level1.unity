@@ -565,9 +565,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 112
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!136 &486828819
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -600,7 +600,7 @@ Transform:
   m_GameObject: {fileID: 486828816}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.4433, y: 1.34, z: 0.11412001}
+  m_LocalPosition: {x: 0.4433, y: 1.395, z: 0.123}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -624,6 +624,11 @@ MonoBehaviour:
   cam: {fileID: 330585545}
   animator: {fileID: 2050894766}
   movementAnimator: 0.75
+  jumpForce: 8
+  groundedLayer:
+    serializedVersion: 2
+    m_Bits: 128
+  groundCheckDistance: 0.37
 --- !u!1 &563157724
 GameObject:
   m_ObjectHideFlags: 0
@@ -929,7 +934,7 @@ GameObject:
   - component: {fileID: 1204028849}
   - component: {fileID: 1204028848}
   - component: {fileID: 1204028847}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Plane
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1023,7 +1028,7 @@ Transform:
   m_GameObject: {fileID: 1204028846}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.004, z: -0.221}
   m_LocalScale: {x: 48.86, y: 48.86, z: 48.86}
   m_ConstrainProportionsScale: 1
   m_Children: []

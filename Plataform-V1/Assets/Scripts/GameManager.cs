@@ -5,7 +5,9 @@ public class GameManager : MonoBehaviour
 {
    [SerializeField] GameObject gameOverPanel;
 
-   static GameManager instance;
+    private Enemy[] enemies;
+
+    static GameManager instance;
 
    int coinsInTotal = 0;
 
@@ -13,10 +15,13 @@ public class GameManager : MonoBehaviour
 
     void Awake()
     {
-        if(instance == null)
+
+        if (instance == null)
             instance = this;
         else
-            Destroy(gameObject);    
+            Destroy(gameObject);
+
+        enemies = FindObjectsOfType<Enemy>(true);
     }
 
     public void GameOver()

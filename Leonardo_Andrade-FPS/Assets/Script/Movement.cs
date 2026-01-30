@@ -1,5 +1,6 @@
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class Movement : MonoBehaviour
 {
@@ -21,8 +22,18 @@ public class Movement : MonoBehaviour
 
     [SerializeField] float movementAnimator = 1;
 
+    [SerializeField] private float jumpForce = 8f;
+
+    [SerializeField] private LayerMask groundedLayer;
+
+    [SerializeField] private float groundCheckDistance = 0.2f;
+
+    private bool grounded;
+
     float walkingMultiplayer = 0.5f;
     float runMultiplayer = 1f;
+
+
 
 
     void Update()
@@ -59,6 +70,16 @@ public class Movement : MonoBehaviour
             targetVel *= walkingMultiplayer;
         }
 
+
+        
+        Debug.Log("Update OK");
+
+        Debug.DrawRay(transform.position, Vector3.down, Color.green);
+
+        CheckGround();
+        
+
+
         targetVel.y = vel.y;
 
         rb.linearVelocity = Vector3.Lerp(vel, targetVel, drag*Time.deltaTime);
@@ -68,6 +89,25 @@ public class Movement : MonoBehaviour
         velAfterAtribution.y = 0;
 
         animator.SetFloat("PlayerSpeed", velAfterAtribution.magnitude/(speed*movementAnimator));
+
+        CheckGround();
+
+        if (grounded && Input.GetButtonDown("Jump"))
+        {
+            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+        }
+
+
+    }
+
+    void CheckGround()
+    {
+        Vector3 origin = transform.position + Vector3.up * 0.1f;
+
+        Debug.DrawRay(origin, Vector3.down * groundCheckDistance, Color.red);
+
+        grounded = Physics.Raycast(origin,Vector3.down,groundCheckDistance,groundedLayer);
+
 
     }
 }
